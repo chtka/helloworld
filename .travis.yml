@@ -4,10 +4,13 @@ services:
 language: python
 python: 3.6
 before_install:
+- echo "$DOCKER_USERNAME"
 - docker build -t chtka/helloworld:latest .
 - docker run chtka/helloworld:latest bash -c "cd helloworld; pytest"
-- echo "$DOCKER_PASSWORD"
 install:
 - pip install -r requirements.txt
 script:
 - pytest
+after_script:
+- echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+- docker push chtka/helloworld:latest
