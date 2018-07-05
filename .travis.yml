@@ -1,12 +1,18 @@
 sudo: required
 services:
-  - docker
+- docker
 language: python
 python: 3.6
 before_install:
-  - docker build -t chtka/helloworld .
-  - docker run chtka/helloworld bash -c "cd helloworld; pytest"
+- docker build -t chtka/helloworld:latest .
+- docker run chtka/helloworld:latest bash -c "cd helloworld; pytest"
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- docker push chtka/helloworld:latest 
 install:
-  - pip install -r requirements.txt
+- pip install -r requirements.txt
 script:
-  - pytest
+- pytest
+env:
+  matrix:
+  - secure: hFG+hokojMgjV0GvhzTgoRlReaT7DnH8i9uVBhUlsSa2O25XDIBq70km71e8YfSs02BOM/rhhXs/VRYPMPE9eVb7v/ewr76vcA9m0LJ66lwZLgSjbJCi0ELim2qmKKGnbtAx2w2HGv+zQKTuI67EzyMC5UWfANMi2fPh8dnVXfdM/gXVO3eyVTxrSQYiQwoKM3vPyx8hb7hlkBUbjTLPhUSOPnvqkWUmvvy6IHj+iFXPpQ4d6yE06b93c3WVTI+LaFz6bibENwmO0dJ9PRMbPCkYY/cxuCCbEUX43tpldNpeclg6GHzIN+gu+RLyKLuTzNqCEPxM9viR/+R/SzdcrCWx7ubg4JLQFhqwjcgEZ/Z+0om1XQEKSiPf/tZQtx1hjy1az9vX02dGQvMWiAKiuq0K6979KC1ISRYxhtm2KsGnoPBDiDDv4KCB1t33OA017WOFBQrOrMygnj7aou41mXgxaiYZR0Szmb+J70N8mHw4+1ZVO3owLGaPOsjqkNc8xfao60hOAW+4mtq/2NbKY7sm0tsmrhaPGCrGlVyvOW0/s9yDNNEByt7MX7C2J/km3OCzm7Sl/3Gc7DgMLd0Wgyjp/dm58BR6wPhtLjUEioQfVoCuT7MPG49C4zofwJRT3BFEWMhyb0h5aIL+veX8U9iKHYIDJNU4K5FwB/XiwcY=
+  - secure: lJ8ALkvNSCt1sOW4HyQNMryW7aa0Zw9JfNr6faRO0aPQ16coWs9IbUFSPuPB6pnePfGhbxEReXRYita+gEjCR+M2N65r0tiOlIiedCyfO1Q0CTOoLIfS0RCYGaavvilG3fL//rA+4gfr3uEtmoWdh2FIWj0rPK7BLoATWdqoi6VNuay7q1oYpyNQTs9l0m2gisitp+D8f/bDzPHpM8qbBgdUq/ZVgYWo7QoJ3u5kLKViI4U3v2QGDBI2ENP7sTSxnUJCtcwbBj7xETjFOy4qF0WqRMZBygWPN1xIHUxLv0EJFFc0tOjoib1xWUybj6KLSlA5KRVZPb8BcILCYDN4TYED7UaojEgC/NFa64faNCdOQoSea1HAKdkP0mgDGX0/mo3TFB9iu4oZ0uX46FB+4qpbNZ807tIPoYJ/ITXGk1iKnwu8DqWGC0KE/o3+XCROBumR/AK3o+gQVntH93xHBUUyEEYXwK9PzPeuJCw2IwykJRQGV34ib4yhmgaJEqiwZxZ+Ds4B0E+Lny14iHoRrqIzUB2ZqY2bq4s4I7yuP5B/3TmhW16Lvx4gEpKngxGhSHlurD1ysqHxgUycA5GJyv2U/1l01CkRtJWGHhmODPTq9nKLOO6+Ygdi1psCb3FO3lXdkR4rke+ed3FhAxZSrG4ljYxmRtnSZTWBhXuZT0U=
